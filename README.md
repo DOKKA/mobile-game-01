@@ -30,3 +30,5 @@ A tiny dev server with live reload is handy:
 
 ```bash
 npx serve .
+```
+Released under the [MIT License](LICENSE).

@@ -1,0 +1,33 @@
+<!-- Main HTML structure for Sweet Swipe. Mounts game grid and HUD. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweet Swipe</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="style.css">
+<script defer src="game.js"></script>
+<script defer src="sound.js"></script>
+</head>
+<body>
+<header>
+  <h1>Sweet Swipe</h1>
+  <div id="hud">
+    <span id="score">0</span> pts | <span id="moves">20</span> moves
+  </div>
+</header>
+<div id="game" aria-label="Game board"></div>
+<div id="modal" class="hidden" role="dialog" aria-labelledby="modal-text">
+  <div id="modal-content">
+    <p id="modal-text">Game Over!</p>
+    <button id="play-again">Play again?</button>
+  </div>
+</div>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
+</body>
+</html>

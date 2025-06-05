@@ -1,0 +1,10 @@
+/* Web app manifest */
+{
+  "name": "Sweet Swipe",
+  "short_name": "SweetSwipe",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ff66cc",
+  "icons": []
+}
