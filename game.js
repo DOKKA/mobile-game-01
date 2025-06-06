@@ -21,9 +21,35 @@ function emoji(type){return{red:"🍓",blue:"💎",green:"🍇",yellow:"🍋",pu
 function createCell(type){const d=document.createElement('div');d.className='candy '+type;d.textContent=emoji(type);return d;}
 function setCandy(i,type){const cell=board[i];cell.type=type;cell.el.className='candy '+type;cell.el.textContent=emoji(type);} 
 
-function init(){gameEl.innerHTML='';board=[];for(let y=0;y<BOARD_SIZE;y++){for(let x=0;x<BOARD_SIZE;x++){let t=randomCandy();let el=createCell(t);gameEl.appendChild(el);board.push({type:t,el});}}
-highScore = parseInt(localStorage.getItem('highScore')) || highScore;
-score=0;moves=20;updateHUD();cursor=0;updateCursor();resolveMatches();}
+function init(){
+  gameEl.innerHTML='';
+  board=[];
+  for(let y=0;y<BOARD_SIZE;y++){
+    for(let x=0;x<BOARD_SIZE;x++){
+      let t=randomCandy();
+      let el=createCell(t);
+      gameEl.appendChild(el);
+      board.push({type:t,el});
+    }
+  }
+  // ensure the initial board has no matches without scoring
+  let m=findMatches();
+  while(m.length){
+    for(const group of m){
+      for(const i of group){
+        setCandy(i, randomCandy());
+      }
+    }
+    m=findMatches();
+  }
+  highScore = parseInt(localStorage.getItem('highScore')) || highScore;
+  score=0;
+  moves=20;
+  updateHUD();
+  cursor=0;
+  selected=null;
+  updateCursor();
+}
 
 function updateHUD(){
   scoreEl.textContent=score;

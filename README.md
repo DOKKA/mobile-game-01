@@ -22,7 +22,8 @@ Play it here once GitHub Pages finishes building:
 `https://<your-username>.github.io/sweet-swipe`
 
 The game keeps track of your best score in local storage so you can try to
-beat your previous high any time you open it.
+beat your previous high any time you open it. On startup the board is shuffled
+until there are no matches, ensuring the first move is always yours.
 
 ---
 
