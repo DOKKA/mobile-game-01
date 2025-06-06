@@ -80,7 +80,25 @@ async function applyGravity(){for(let x=0;x<BOARD_SIZE;x++){for(let y=BOARD_SIZE
 
 async function resolveMatches(){while(true){let m=findMatches();if(!m.length)break;await clearMatches(m);await applyGravity();}}
 
-async function attemptSwap(i1,i2){if(moves<=0)return;swap(i1,i2);let m=findMatches();if(m.length){moves--;updateHUD();await resolveMatches();if(moves<=0)gameOver();}else{swap(i1,i2);}updateCursor();}
+async function attemptSwap(i1,i2){
+  if(moves<=0)return;
+  swap(i1,i2);
+  let m=findMatches();
+  if(m.length){
+    board[i1].el.classList.add('swap-success');
+    board[i2].el.classList.add('swap-success');
+    await wait(300);
+    board[i1].el.classList.remove('swap-success');
+    board[i2].el.classList.remove('swap-success');
+    moves--;
+    updateHUD();
+    await resolveMatches();
+    if(moves<=0)gameOver();
+  }else{
+    swap(i1,i2);
+  }
+  updateCursor();
+}
 
 function gameOver(){
   if(score>=highScore){

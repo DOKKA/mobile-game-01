@@ -9,6 +9,7 @@ A lightweight, fully-client-side HTML 5 match-3 game (think simplified **Candy C
 | Rules   | Swap adjacent candies, clear runs ≥ 3, chain reactions, 20-move limit |
 | Scoring | +10 pts / candy removed, persistent high score |
 | UX      | 60 fps CSS transitions, no double-tap zoom |
+| Animation | Pop effect on successful swaps |
 | PWA     | `manifest.webmanifest` + offline cache (`sw.js`) |
 | License | MIT |
 
