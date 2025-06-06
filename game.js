@@ -6,7 +6,10 @@ let score=0,moves=20;
 const gameEl=document.getElementById('game');
 const scoreEl=document.getElementById('score');
 const movesEl=document.getElementById('moves');
+const highScoreEl=document.getElementById('high-score');
+let highScore = parseInt(localStorage.getItem('highScore')) || 0;
 const modal=document.getElementById('modal');
+const modalText=document.getElementById('modal-text');
 const playAgain=document.getElementById('play-again');
 let cursor=0,selected=null;
 
@@ -19,9 +22,14 @@ function createCell(type){const d=document.createElement('div');d.className='can
 function setCandy(i,type){const cell=board[i];cell.type=type;cell.el.className='candy '+type;cell.el.textContent=emoji(type);} 
 
 function init(){gameEl.innerHTML='';board=[];for(let y=0;y<BOARD_SIZE;y++){for(let x=0;x<BOARD_SIZE;x++){let t=randomCandy();let el=createCell(t);gameEl.appendChild(el);board.push({type:t,el});}}
+highScore = parseInt(localStorage.getItem('highScore')) || highScore;
 score=0;moves=20;updateHUD();cursor=0;updateCursor();resolveMatches();}
 
-function updateHUD(){scoreEl.textContent=score;movesEl.textContent=moves;}
+function updateHUD(){
+  scoreEl.textContent=score;
+  movesEl.textContent=moves;
+  highScoreEl.textContent=highScore;
+}
 function updateCursor(){board.forEach(c=>c.el.classList.remove('cursor','selected'));board[cursor].el.classList.add('cursor');if(selected!==null)board[selected].el.classList.add('selected');}
 
 function swap(i1,i2){let t=board[i1].type;setCandy(i1,board[i2].type);setCandy(i2,t);} 
@@ -33,7 +41,14 @@ for(let x=0;x<BOARD_SIZE;x++){let run=[index(x,0)];for(let y=1;y<BOARD_SIZE;y++)
 return matches;}
 
 async function clearMatches(matches){let cleared=0;for(let m of matches){for(let i of m){board[i].el.style.animation='fade-out 0.2s forwards';board[i].type=null;cleared++;}}await wait(200);for(let i=0;i<board.length;i++){if(board[i].type===null){setCandy(i,null);board[i].el.style.opacity='0';}}
-score+=cleared*10;updateHUD();playPop();return cleared;}
+score+=cleared*10;
+if(score>highScore){
+  highScore=score;
+  localStorage.setItem('highScore',highScore);
+}
+updateHUD();
+playPop();
+return cleared;}
 
 async function applyGravity(){for(let x=0;x<BOARD_SIZE;x++){for(let y=BOARD_SIZE-1;y>=0;y--){let i=index(x,y);if(board[i].type===null){let yy=y-1;while(yy>=0&&board[index(x,yy)].type===null)yy--;if(yy>=0){setCandy(i,board[index(x,yy)].type);board[index(x,yy)].type=null;}else{setCandy(i,randomCandy());}}}}}
 
@@ -41,7 +56,14 @@ async function resolveMatches(){while(true){let m=findMatches();if(!m.length)bre
 
 async function attemptSwap(i1,i2){if(moves<=0)return;swap(i1,i2);let m=findMatches();if(m.length){moves--;updateHUD();await resolveMatches();if(moves<=0)gameOver();}else{swap(i1,i2);}updateCursor();}
 
-function gameOver(){modal.classList.remove('hidden');}
+function gameOver(){
+  if(score>=highScore){
+    modalText.textContent='New high score: '+score+'!';
+  }else{
+    modalText.textContent='Final score: '+score;
+  }
+  modal.classList.remove('hidden');
+}
 playAgain.addEventListener('click',()=>{modal.classList.add('hidden');init();});
 
 function getCellIndexFromEvent(e){let idx=[...gameEl.children].indexOf(e.target.closest('.candy'));return idx;}

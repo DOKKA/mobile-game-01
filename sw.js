@@ -1,11 +1,12 @@
 // Offline cache service worker
 /* Service Worker: cache-first */
-const CACHE_NAME = 'sweet-swipe-v1';
+const CACHE_NAME = 'sweet-swipe-v2';
 const ASSETS = [
   '/',
   '/index.html',
   '/style.css',
   '/game.js',
+  '/sound.js',
   '/manifest.webmanifest'
 ];
 self.addEventListener('install', e => {
