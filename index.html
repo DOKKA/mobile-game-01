@@ -26,6 +26,16 @@
     <button id="play-again">Play again?</button>
   </div>
 </div>
+<button id="how-to-button" aria-haspopup="dialog">How to play?</button>
+<div id="help-modal" class="hidden" role="dialog" aria-labelledby="help-text">
+  <div id="help-content">
+    <p id="help-text">
+      Swap adjacent candies to line up three or more of the same color. Use touch, mouse drag or arrow keys
+      with Space to swap. You have 20 moves to score as many points as you can!
+    </p>
+    <button id="close-help">Got it!</button>
+  </div>
+</div>
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js');

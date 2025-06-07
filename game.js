@@ -11,6 +11,9 @@ let highScore = parseInt(localStorage.getItem('highScore')) || 0;
 const modal=document.getElementById('modal');
 const modalText=document.getElementById('modal-text');
 const playAgain=document.getElementById('play-again');
+const helpButton=document.getElementById('how-to-button');
+const helpModal=document.getElementById('help-modal');
+const closeHelp=document.getElementById('close-help');
 let cursor=0,selected=null;
 let isProcessingMove=false;
 let isGameOverState=false;
@@ -218,6 +221,8 @@ function gameOver(){
   modal.classList.remove('hidden');
 }
 playAgain.addEventListener('click',()=>{modal.classList.add('hidden');init();});
+helpButton.addEventListener('click',()=>{helpModal.classList.remove('hidden');});
+closeHelp.addEventListener('click',()=>{helpModal.classList.add('hidden');});
 
 function getCellIndexFromEvent(e){let idx=[...gameEl.children].indexOf(e.target.closest('.candy'));return idx;}
 let startIndex=null,startX=0,startY=0;
